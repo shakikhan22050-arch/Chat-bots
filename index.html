@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 400px;
+      height: 600px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .message {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 15px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .user-message {
+      align-self: flex-end;
+      background: #007bff;
+      color: white;
+      border-bottom-right-radius: 2px;
+    }
+    .bot-message {
+      align-self: flex-start;
+      background: #e9ecef;
+      color: #333;
+      border-bottom-left-radius: 2px;
+    }
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+    }
+    .chat-input-area button {
+      margin-left: 8px;
+      padding: 10px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .chat-input-area button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
 
+  <div class="chat-container">
+    <div class="chat-header">
+      AI Chat Assistant
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot-message">
+        Hello! Main aapki kya madad kar sakta hoon?
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="userInput" placeholder="Apna message likhein..." onkeypress="handleKeyPress(event)">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const inputField = document.getElementById('userInput');
+      const text = inputField.value.trim();
+      
+      if (text === "") return;
+
+      // Add user message
+      addMessage(text, 'user-message');
+      inputField.value = '';
+
+      // Simple auto-reply demo
+      setTimeout(() => {
+        let reply = "Shukriya! Mujhe aapka message mil gaya.";
+        if (text.toLowerCase().includes("hello") || text.toLowerCase().includes("hi")) {
+          reply = "Hello! Kaise hain aap?";
+        }
+        addMessage(reply, 'bot-message');
+      }, 600);
+    }
+
+    function addMessage(text, className) {
+      const messagesDiv = document.getElementById('chatMessages');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', className);
+      messageElement.innerText = text;
+      messagesDiv.appendChild(messageElement);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+  </script>
+
+</body>
+</html>
